@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { registerUser } from '@/lib/api';
+
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -29,22 +31,49 @@ export default function RegisterPage() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match")
-      return
-    }
-
-    if (!formData.terms) {
-      alert("Please accept the Terms & Conditions")
-      return
-    }
-
-    alert("Registration successful")
-    router.push("/login")
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match");
+    return;
   }
+
+  try {
+    const res = await fetch("http://localhost:3001/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        username: formData.username,
+        email: formData.email,
+        phone: formData.phone,
+        dob: formData.dob,
+        gender: formData.gender,
+        password: formData.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Registration failed");
+      return;
+    }
+
+    // 🔐 LIVE TOKEN STORAGE
+    localStorage.setItem("token", data.token);
+
+    alert("Registration successful 🎉");
+    router.push("/login");
+  } catch (error) {
+    alert("Backend server not reachable");
+  }
+};
+
+
 
   return (
     <div className="h-[710px] grid grid-cols-1 md:grid-cols-2 overflow-hidden">

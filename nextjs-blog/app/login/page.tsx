@@ -19,16 +19,31 @@ export default function LoginPage() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!formData.identifier || !formData.password) {
-      alert("Please fill all fields")
-      return
-    }
+  console.log("LOGIN DATA:", formData); // 🔴 IMPORTANT
 
-    router.push("/dashboard")
+  const res = await fetch("http://localhost:3001/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      identifier: formData.identifier, // ✅ FIX
+      password: formData.password,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.message || "Login failed");
+    return;
   }
+
+  localStorage.setItem("token", data.token);
+  router.push("/dashboard");
+};
+
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
