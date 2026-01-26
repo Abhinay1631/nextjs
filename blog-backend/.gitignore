@@ -1,0 +1,38 @@
+# compiled output
+/dist
+/node_modules
+
+# logs
+npm-debug.log
+yarn-error.log
+
+# env files
+.env
+.env.test
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+test-report.xml
+npm-debug.log
+yarn-error.log
+test-report.xml
+**/*.hot-update.json
