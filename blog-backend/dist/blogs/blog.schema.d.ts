@@ -5,6 +5,7 @@ export declare class Blog {
     title: string;
     content: string;
     author: User;
+    status: string;
 }
 export declare const BlogSchema: MongooseSchema<Blog, import("mongoose").Model<Blog, any, any, any, (Document<unknown, any, Blog, any, import("mongoose").DefaultSchemaOptions> & Blog & {
     _id: import("mongoose").Types.ObjectId;
@@ -44,6 +45,15 @@ export declare const BlogSchema: MongooseSchema<Blog, import("mongoose").Model<B
         id: string;
     }> | undefined;
     author?: import("mongoose").SchemaDefinitionProperty<User, Blog, Document<unknown, {}, Blog, {
+        id: string;
+    }, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & Omit<Blog & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    status?: import("mongoose").SchemaDefinitionProperty<string, Blog, Document<unknown, {}, Blog, {
         id: string;
     }, import("mongoose").ResolveSchemaOptions<import("mongoose").DefaultSchemaOptions>> & Omit<Blog & {
         _id: import("mongoose").Types.ObjectId;

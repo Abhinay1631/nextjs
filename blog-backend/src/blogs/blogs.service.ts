@@ -38,4 +38,29 @@ export class BlogsService {
     async findAllDebug() {
         return this.blogModel.find().exec();
     }
+
+    async findOne(id: string) {
+        if (!this.isValidObjectId(id)) {
+            throw new Error('Invalid ID');
+        }
+        return this.blogModel.findById(id).exec();
+    }
+
+    async update(id: string, updateBlogDto: any, userId: string) {
+        if (!this.isValidObjectId(id) || !this.isValidObjectId(userId)) {
+            throw new Error('Invalid ID');
+        }
+        return this.blogModel.findOneAndUpdate(
+            { _id: new Types.ObjectId(id), author: new Types.ObjectId(userId) } as any,
+            { $set: updateBlogDto },
+            { new: true }
+        ).exec();
+    }
+
+    async delete(id: string, userId: string) {
+        if (!this.isValidObjectId(id) || !this.isValidObjectId(userId)) {
+            throw new Error('Invalid ID');
+        }
+        return this.blogModel.findOneAndDelete({ _id: new Types.ObjectId(id), author: new Types.ObjectId(userId) } as any).exec();
+    }
 }

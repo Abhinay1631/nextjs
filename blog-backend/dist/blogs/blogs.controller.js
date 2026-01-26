@@ -30,6 +30,15 @@ let BlogsController = class BlogsController {
     findAllDebug() {
         return this.blogsService.findAllDebug();
     }
+    findOne(id) {
+        return this.blogsService.findOne(id);
+    }
+    update(id, updateBlogDto, req) {
+        return this.blogsService.update(id, updateBlogDto, req.user.userId);
+    }
+    remove(id, req) {
+        return this.blogsService.delete(id, req.user.userId);
+    }
 };
 exports.BlogsController = BlogsController;
 __decorate([
@@ -55,6 +64,32 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], BlogsController.prototype, "findAllDebug", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], BlogsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", void 0)
+], BlogsController.prototype, "update", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], BlogsController.prototype, "remove", null);
 exports.BlogsController = BlogsController = __decorate([
     (0, common_1.Controller)('blogs'),
     __metadata("design:paramtypes", [blogs_service_1.BlogsService])

@@ -17,6 +17,7 @@ let Blog = class Blog {
     title;
     content;
     author;
+    status;
 };
 exports.Blog = Blog;
 __decorate([
@@ -31,6 +32,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Schema.Types.ObjectId, ref: 'User', required: true }),
     __metadata("design:type", user_schema_1.User)
 ], Blog.prototype, "author", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, enum: ['draft', 'published'], default: 'draft' }),
+    __metadata("design:type", String)
+], Blog.prototype, "status", void 0);
 exports.Blog = Blog = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Blog);

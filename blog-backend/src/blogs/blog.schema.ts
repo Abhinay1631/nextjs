@@ -14,6 +14,9 @@ export class Blog {
 
     @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
     author: User;
+
+    @Prop({ required: true, enum: ['draft', 'published'], default: 'draft' })
+    status: string;
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);

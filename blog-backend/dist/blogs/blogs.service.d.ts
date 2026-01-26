@@ -25,4 +25,25 @@ export declare class BlogsService {
     } & {
         id: string;
     })[]>;
+    findOne(id: string): Promise<(import("mongoose").Document<unknown, {}, BlogDocument, {}, import("mongoose").DefaultSchemaOptions> & Blog & import("mongoose").Document<Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
+        _id: Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
+    }) | null>;
+    update(id: string, updateBlogDto: any, userId: string): Promise<(import("mongoose").Document<unknown, {}, BlogDocument, {}, import("mongoose").DefaultSchemaOptions> & Blog & import("mongoose").Document<Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
+        _id: Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
+    }) | null>;
+    delete(id: string, userId: string): Promise<(import("mongoose").Document<unknown, {}, BlogDocument, {}, import("mongoose").DefaultSchemaOptions> & Blog & import("mongoose").Document<Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
+        _id: Types.ObjectId;
+    }> & {
+        __v: number;
+    } & {
+        id: string;
+    }) | null>;
 }

@@ -50,6 +50,24 @@ let BlogsService = class BlogsService {
     async findAllDebug() {
         return this.blogModel.find().exec();
     }
+    async findOne(id) {
+        if (!this.isValidObjectId(id)) {
+            throw new Error('Invalid ID');
+        }
+        return this.blogModel.findById(id).exec();
+    }
+    async update(id, updateBlogDto, userId) {
+        if (!this.isValidObjectId(id) || !this.isValidObjectId(userId)) {
+            throw new Error('Invalid ID');
+        }
+        return this.blogModel.findOneAndUpdate({ _id: new mongoose_2.Types.ObjectId(id), author: new mongoose_2.Types.ObjectId(userId) }, { $set: updateBlogDto }, { new: true }).exec();
+    }
+    async delete(id, userId) {
+        if (!this.isValidObjectId(id) || !this.isValidObjectId(userId)) {
+            throw new Error('Invalid ID');
+        }
+        return this.blogModel.findOneAndDelete({ _id: new mongoose_2.Types.ObjectId(id), author: new mongoose_2.Types.ObjectId(userId) }).exec();
+    }
 };
 exports.BlogsService = BlogsService;
 exports.BlogsService = BlogsService = __decorate([
