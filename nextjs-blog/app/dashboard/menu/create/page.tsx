@@ -1,10 +1,37 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function CreateBlogPage() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
+  const router = useRouter()
+
+  const handlePublish = async () => {
+    try {
+      const token = localStorage.getItem("token")
+      const res = await fetch("http://localhost:3001/blogs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, content }),
+      })
+
+      if (res.ok) {
+        alert("Blog published successfully!")
+        router.push("/dashboard/menu/blogs")
+      } else {
+        const errorData = await res.json();
+        alert(`Failed to publish blog: ${errorData.message || res.statusText}`)
+      }
+    } catch (error) {
+      console.error(error)
+      alert("Something went wrong")
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black p-10 text-white">
@@ -26,7 +53,10 @@ export default function CreateBlogPage() {
           className="w-full p-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none"
         />
 
-        <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition">
+        <button
+          onClick={handlePublish}
+          className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition"
+        >
           Publish Blog
         </button>
       </div>

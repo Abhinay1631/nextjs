@@ -64,11 +64,15 @@ let AuthService = class AuthService {
     }
     async login(identifier, password) {
         const user = await this.usersService.findByEmailOrUsername(identifier);
-        if (!user)
-            throw new common_1.UnauthorizedException('Invalid credentials');
+        if (!user) {
+            console.log(`Login failed: User not found for identifier ${identifier}`);
+            throw new common_1.UnauthorizedException('User not found');
+        }
         const match = await bcrypt.compare(password, user.password);
-        if (!match)
-            throw new common_1.UnauthorizedException('Invalid credentials');
+        if (!match) {
+            console.log(`Login failed: Password mismatch for user ${identifier}`);
+            throw new common_1.UnauthorizedException('Password mismatch');
+        }
         const payload = {
             sub: user._id.toString(),
             email: user.email,

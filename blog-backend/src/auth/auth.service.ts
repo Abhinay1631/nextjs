@@ -8,7 +8,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register(dto: any) {
     const hashed = await bcrypt.hash(dto.password, 10)
@@ -21,10 +21,16 @@ export class AuthService {
 
   async login(identifier: string, password: string) {
     const user = await this.usersService.findByEmailOrUsername(identifier)
-    if (!user) throw new UnauthorizedException('Invalid credentials')
+    if (!user) {
+      console.log(`Login failed: User not found for identifier ${identifier}`);
+      throw new UnauthorizedException('User not found')
+    }
 
     const match = await bcrypt.compare(password, user.password)
-    if (!match) throw new UnauthorizedException('Invalid credentials')
+    if (!match) {
+      console.log(`Login failed: Password mismatch for user ${identifier}`);
+      throw new UnauthorizedException('Password mismatch')
+    }
 
     const payload = {
       sub: user._id.toString(),
