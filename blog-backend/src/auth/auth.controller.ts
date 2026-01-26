@@ -9,4 +9,9 @@ export class AuthController {
   login(@Body() body: { identifier: string; password: string }) {
     return this.authService.login(body.identifier, body.password)
   }
+
+  @Post('register')
+  register(@Body() body: any) {
+    return this.authService.register(body)
+  }
 }
